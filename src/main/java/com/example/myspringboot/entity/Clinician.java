@@ -19,11 +19,8 @@ public class Clinician {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private LocalDateTime createTime;
 
-    @Column(nullable = false)
     private LocalDateTime updateTime;
 
-    // Getters and setters
 }

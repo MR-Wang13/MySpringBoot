@@ -19,10 +19,8 @@ public class Participant {
     @Column(nullable = false, unique = true)
     private String deviceUuid;
 
-    @Column(nullable = false)
     private LocalDateTime createTime;
 
-    @Column(nullable = false)
     private LocalDateTime updateTime;
 
 }

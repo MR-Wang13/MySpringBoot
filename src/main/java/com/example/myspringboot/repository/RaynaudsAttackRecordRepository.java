@@ -6,6 +6,6 @@ import java.util.List;
 
 @Repository
 public interface RaynaudsAttackRecordRepository extends JpaRepository<RaynaudsAttackRecord, Long> {
-    List<RaynaudsAttackRecord> findByParticipant_ParticipantId(Long participantId);
+    List<RaynaudsAttackRecord> findByParticipantId(Long participantId);
 }
 

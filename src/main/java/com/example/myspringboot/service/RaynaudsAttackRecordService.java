@@ -29,6 +29,6 @@ public class RaynaudsAttackRecordService {
     }
 
     public List<RaynaudsAttackRecord> getAttackRecordsByParticipantId(Long participantId) {
-        return attackRecordRepository.findByParticipant_ParticipantId(participantId);
+        return attackRecordRepository.findByParticipantId(participantId);
     }
 }

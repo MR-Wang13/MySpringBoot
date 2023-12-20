@@ -16,9 +16,8 @@ public class RaynaudsAttackRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long attackId;
 
-    @ManyToOne
-    @JoinColumn(name = "participant_id", nullable = false)
-    private Participant participant;
+    @Column(nullable = false)
+    private Long participantId;
 
     @Column(nullable = false)
     private LocalDate attackDate;
@@ -30,16 +29,13 @@ public class RaynaudsAttackRecord {
     @Enumerated(EnumType.STRING)
     private Location location;
 
-    @Column(nullable = false)
     private LocalDateTime createTime;
 
-    @Column(nullable = false)
     private LocalDateTime updateTime;
 
     public enum Location {
         INSIDE, OUTSIDE
     }
 
-    // Getters and setters
 }
 
