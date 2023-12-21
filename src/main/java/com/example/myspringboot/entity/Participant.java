@@ -1,8 +1,10 @@
 package com.example.myspringboot.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
+
+import javax.persistence.GenerationType;
 import java.time.LocalDateTime;
 @Data
 @Entity
