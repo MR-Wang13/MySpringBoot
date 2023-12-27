@@ -1,11 +1,11 @@
 package com.example.myspringboot.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -20,22 +20,12 @@ public class RaynaudsAttackRecord {
     private Long participantId;
 
     @Column(nullable = false)
-    private LocalDate attackDate;
+    private LocalDateTime attackDate;
+
 
     @Column(nullable = false)
-    private LocalTime attackTime;
+    private String location;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Location location;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
-
-    public enum Location {
-        INSIDE, OUTSIDE
-    }
 
 }
 

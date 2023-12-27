@@ -1,6 +1,7 @@
 package com.example.myspringboot.controller;
 import com.example.myspringboot.entity.RaynaudsAttackRecord;
 import com.example.myspringboot.service.RaynaudsAttackRecordService;
+import com.example.myspringboot.vo.ChartDataVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class RaynaudsAttackRecordController {
         if (record != null) {
             return ResponseEntity.ok(record);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(null);
         }
     }
 
@@ -44,6 +45,12 @@ public class RaynaudsAttackRecordController {
     @ApiOperation(value = "getAttackRecordsByParticipantId" , notes = "getAttackRecordsByParticipantId")
     public ResponseEntity<List<RaynaudsAttackRecord>> getAttackRecordsByParticipantId(@PathVariable Long participantId) {
         return ResponseEntity.ok(attackRecordService.getAttackRecordsByParticipantId(participantId));
+    }
+
+    @GetMapping("/getChartData/{participantId}")
+    @ApiOperation(value = "getChartDataByParticipantId" , notes = "getChartDataByParticipantId")
+    public ResponseEntity<ChartDataVo> getChartDataByParticipantId(@PathVariable Long participantId) {
+        return ResponseEntity.ok(attackRecordService.getChartDataByParticipantId(participantId));
     }
 
     @DeleteMapping("/{id}")

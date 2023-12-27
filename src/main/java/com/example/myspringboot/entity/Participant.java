@@ -15,15 +15,11 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long participantId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String deviceUuid;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 
 }
 
