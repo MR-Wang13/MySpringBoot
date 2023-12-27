@@ -14,5 +14,8 @@ public interface RaynaudsAttackRecordRepository extends JpaRepository<RaynaudsAt
 
     @Query(value = "from RaynaudsAttackRecord where participantId=:participantId and attackDate >=CURRENT_DATE - 7 order by attackDate ")
     List<RaynaudsAttackRecord> getPastSevenDaysRecordsByParticipantId(@Param("participantId") Long participantId);
+
+    @Query(value = "from RaynaudsAttackRecord where participantId=:participantId and attackDate >= CURRENT_DATE AND attackDate < CURRENT_DATE + 1 order by attackDate ")
+    List<RaynaudsAttackRecord> getTodayRecordsByParticipantId(@Param("participantId")Long participantId);
 }
 

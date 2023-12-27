@@ -47,6 +47,12 @@ public class RaynaudsAttackRecordController {
         return ResponseEntity.ok(attackRecordService.getAttackRecordsByParticipantId(participantId));
     }
 
+    @GetMapping("/participant/today/{participantId}")
+    @ApiOperation(value = "getTodayRecordsByParticipantId" , notes = "getTodayRecordsByParticipantId")
+    public ResponseEntity<List<RaynaudsAttackRecord>> getTodayRecordsByParticipantId(@PathVariable Long participantId) {
+        return ResponseEntity.ok(attackRecordService.getTodayRecordsByParticipantId(participantId));
+    }
+
     @GetMapping("/getChartData/{participantId}")
     @ApiOperation(value = "getChartDataByParticipantId" , notes = "getChartDataByParticipantId")
     public ResponseEntity<ChartDataVo> getChartDataByParticipantId(@PathVariable Long participantId) {

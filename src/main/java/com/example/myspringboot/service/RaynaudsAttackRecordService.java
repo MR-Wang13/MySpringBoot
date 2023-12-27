@@ -40,9 +40,14 @@ public class RaynaudsAttackRecordService {
         return attackRecordRepository.findByParticipantId(participantId);
     }
 
+
+    public List<RaynaudsAttackRecord> getTodayRecordsByParticipantId(Long participantId) {
+        return attackRecordRepository.getTodayRecordsByParticipantId(participantId);
+    }
+
     public ChartDataVo getChartDataByParticipantId(Long participantId) {
         ChartDataVo vo = new ChartDataVo();
-        List<RaynaudsAttackRecord> records = attackRecordRepository.findByParticipantId(participantId);
+        List<RaynaudsAttackRecord> records = attackRecordRepository.getPastSevenDaysRecordsByParticipantId(participantId);
         if (CollectionUtils.isEmpty(records)){
             return vo;
         }
