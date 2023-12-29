@@ -1,6 +1,7 @@
 package com.example.myspringboot.controller;
 import com.example.myspringboot.entity.Participant;
 import com.example.myspringboot.service.ParticipantService;
+import com.example.myspringboot.vo.CheckUserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ParticipantController {
 
     @PostMapping
     @ApiOperation(value = "createParticipant" , notes = "createParticipant")
-    public ResponseEntity<Participant> createParticipant(@RequestBody Participant participant) {
+    public ResponseEntity<?> createParticipant(@RequestBody Participant participant) {
         return ResponseEntity.ok(participantService.saveParticipant(participant));
     }
 

@@ -1,6 +1,7 @@
 package com.example.myspringboot.service;
 import com.example.myspringboot.entity.Clinician;
 import com.example.myspringboot.repository.ClinicianRepository;
+import com.example.myspringboot.vo.CheckUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,16 @@ public class ClinicianService {
     public void deleteClinician(Long id) {
         clinicianRepository.deleteById(id);
     }
-    public boolean validateClinicianLogin(String username, String password) {
+    public CheckUserVo validateClinicianLogin(String username, String password) {
+        CheckUserVo vo = new CheckUserVo(true,"");
         Clinician clinician = clinicianRepository.findByUsername(username);
-        if (clinician != null && clinician.getPassword().equals(password)) {
-            return true;
+        if (clinician == null) {
+            vo.setChecked(false);
+            vo.setResErrMsg("User does not exist");
+        }else if(!clinician.getPassword().equals(password)){
+            vo.setChecked(false);
+            vo.setResErrMsg("Incorrect password");
         }
-        return false;
+        return vo;
     }
 }

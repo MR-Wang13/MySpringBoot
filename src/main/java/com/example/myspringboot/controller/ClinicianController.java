@@ -55,11 +55,6 @@ public class ClinicianController {
 
     @PostMapping("/validateLogin")
     public ResponseEntity<?> validateClinicianLogin(@RequestParam String username, @RequestParam String password) {
-        boolean isValid = clinicianService.validateClinicianLogin(username, password);
-        if (isValid) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+            return ResponseEntity.ok(clinicianService.validateClinicianLogin(username, password));
     }
 }

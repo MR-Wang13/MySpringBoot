@@ -3,7 +3,9 @@ import com.example.myspringboot.entity.Participant;
 import com.example.myspringboot.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -13,6 +15,10 @@ public class ParticipantService {
     private ParticipantRepository participantRepository;
 
     public Participant saveParticipant(Participant participant) {
+        Participant orin = participantRepository.findByUsername(participant.getUsername());
+        if (orin!=null){
+            return orin;
+        }
         return participantRepository.save(participant);
     }
 
@@ -36,5 +42,6 @@ public class ParticipantService {
     public void deleteParticipant(Long id) {
         participantRepository.deleteById(id);
     }
+
 }
 
