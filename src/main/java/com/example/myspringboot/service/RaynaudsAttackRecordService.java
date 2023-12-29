@@ -89,6 +89,7 @@ public class RaynaudsAttackRecordService {
         if (CollectionUtils.isEmpty(records)){
             return result;
         }
+
         List<Participant> participants = participantService.getParticipantByIds(
                 records.stream().map(RaynaudsAttackRecord::getParticipantId).collect(Collectors.toList())
                 );
