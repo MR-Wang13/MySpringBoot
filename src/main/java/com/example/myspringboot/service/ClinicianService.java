@@ -25,4 +25,11 @@ public class ClinicianService {
     public void deleteClinician(Long id) {
         clinicianRepository.deleteById(id);
     }
+    public boolean validateClinicianLogin(String username, String password) {
+        Clinician clinician = clinicianRepository.findByUsername(username);
+        if (clinician != null && clinician.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
+    }
 }

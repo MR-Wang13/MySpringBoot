@@ -18,6 +18,8 @@ public class CorsConfig {
         config.addAllowedOrigin("capacitor://localhost");
         config.addAllowedOrigin("http://localhost");
         config.addAllowedOrigin("http://localhost:80");
+        config.addAllowedOrigin("http://localhost:4200");
+
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

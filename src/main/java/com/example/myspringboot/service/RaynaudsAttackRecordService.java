@@ -1,17 +1,18 @@
 package com.example.myspringboot.service;
+import com.example.myspringboot.entity.Participant;
 import com.example.myspringboot.entity.RaynaudsAttackRecord;
 import com.example.myspringboot.repository.RaynaudsAttackRecordRepository;
 import com.example.myspringboot.vo.ChartDataVo;
+import com.example.myspringboot.vo.DashboardRecordListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +20,9 @@ public class RaynaudsAttackRecordService {
 
     @Autowired
     private RaynaudsAttackRecordRepository attackRecordRepository;
+
+    @Autowired
+    private ParticipantService participantService;
 
     public RaynaudsAttackRecord saveAttackRecord(RaynaudsAttackRecord record) {
         return attackRecordRepository.save(record);
@@ -55,6 +59,16 @@ public class RaynaudsAttackRecordService {
         return vo;
     }
 
+
+    public ChartDataVo getDashboardChartData() {
+        ChartDataVo vo = new ChartDataVo();
+        List<RaynaudsAttackRecord> records = attackRecordRepository.getPastSevenDaysRecords();
+        if (CollectionUtils.isEmpty(records)){
+            return vo;
+        }
+        resolveRecords(records,vo);
+        return vo;
+    }
     private void resolveRecords(List<RaynaudsAttackRecord> records, ChartDataVo vo) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Map<String, Long> dateCounts = records.stream()
@@ -67,5 +81,30 @@ public class RaynaudsAttackRecordService {
         vo.setNums(dateList.stream()
                 .map(dateCounts::get)
                 .collect(Collectors.toList()));
+    }
+
+    public List<DashboardRecordListVo> getDashboardList() {
+        List<DashboardRecordListVo> result = new ArrayList<>();
+        List<RaynaudsAttackRecord> records = attackRecordRepository.findLatestAttackDatesForAllUsers();
+        if (CollectionUtils.isEmpty(records)){
+            return result;
+        }
+        List<Participant> participants = participantService.getParticipantByIds(
+                records.stream().map(RaynaudsAttackRecord::getParticipantId).collect(Collectors.toList())
+                );
+        Map<Long,String> nameMap = participants.stream().collect(Collectors.toMap(Participant::getParticipantId, Participant::getUsername));
+
+        records.forEach(record->{
+            DashboardRecordListVo vo = new DashboardRecordListVo();
+            vo.setParticipantId(record.getParticipantId());
+            vo.setLastReportTime(record.getAttackDate());
+            vo.setUsername(nameMap.getOrDefault(record.getParticipantId(),"unknown"));
+            long daysDiff = Duration.between(record.getAttackDate(), LocalDateTime.now()).toDays();
+            if (daysDiff>2){
+                vo.setWarning("warning");
+            }
+            result.add(vo);
+        });
+        return result;
     }
 }

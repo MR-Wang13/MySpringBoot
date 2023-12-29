@@ -24,6 +24,11 @@ public class ParticipantService {
         return participantRepository.findById(id).orElse(null);
     }
 
+
+    public List<Participant> getParticipantByIds(List<Long> ids) {
+        return participantRepository.findAllById(ids);
+    }
+
     public Participant updateParticipant(Participant participant) {
         return participantRepository.save(participant);
     }

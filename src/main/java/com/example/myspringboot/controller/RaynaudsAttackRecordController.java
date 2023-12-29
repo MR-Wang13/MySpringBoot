@@ -2,6 +2,7 @@ package com.example.myspringboot.controller;
 import com.example.myspringboot.entity.RaynaudsAttackRecord;
 import com.example.myspringboot.service.RaynaudsAttackRecordService;
 import com.example.myspringboot.vo.ChartDataVo;
+import com.example.myspringboot.vo.DashboardRecordListVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,18 @@ public class RaynaudsAttackRecordController {
     @ApiOperation(value = "getChartDataByParticipantId" , notes = "getChartDataByParticipantId")
     public ResponseEntity<ChartDataVo> getChartDataByParticipantId(@PathVariable Long participantId) {
         return ResponseEntity.ok(attackRecordService.getChartDataByParticipantId(participantId));
+    }
+
+    @GetMapping("/getDashboardChartData")
+    @ApiOperation(value = "getChartDataByParticipantId" , notes = "getChartDataByParticipantId")
+    public ResponseEntity<ChartDataVo> getDashboardChartData() {
+        return ResponseEntity.ok(attackRecordService.getDashboardChartData());
+    }
+
+    @GetMapping("/getDashboardList")
+    @ApiOperation(value = "getChartDataByParticipantId" , notes = "getDashboardList")
+    public ResponseEntity<List<DashboardRecordListVo>> getDashboardList() {
+        return ResponseEntity.ok(attackRecordService.getDashboardList());
     }
 
     @DeleteMapping("/{id}")

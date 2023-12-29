@@ -4,6 +4,7 @@ import com.example.myspringboot.service.ClinicianService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +51,15 @@ public class ClinicianController {
     public ResponseEntity<?> deleteClinician(@PathVariable Long id) {
         clinicianService.deleteClinician(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/validateLogin")
+    public ResponseEntity<?> validateClinicianLogin(@RequestParam String username, @RequestParam String password) {
+        boolean isValid = clinicianService.validateClinicianLogin(username, password);
+        if (isValid) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }
