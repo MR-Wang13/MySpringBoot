@@ -20,7 +20,7 @@ public interface RaynaudsAttackRecordRepository extends JpaRepository<RaynaudsAt
     @Query(value = "from RaynaudsAttackRecord where  attackDate >=CURRENT_DATE - 7 order by attackDate ")
     List<RaynaudsAttackRecord> getPastSevenDaysRecords();
 
-    @Query(value = "from RaynaudsAttackRecord where participantId=:participantId and attackDate >= CURRENT_DATE AND attackDate < CURRENT_DATE + 1 order by attackDate ")
+    @Query(value = "SELECT * FROM raynauds_attack_records WHERE participant_id = :participantId AND create_time >= CURRENT_DATE AND create_time < CURRENT_DATE  + INTERVAL 1 DAY  ORDER BY attack_date", nativeQuery = true)
     List<RaynaudsAttackRecord> getTodayRecordsByParticipantId(@Param("participantId")Long participantId);
 
     @Query("SELECT ar FROM RaynaudsAttackRecord ar WHERE ar.attackDate IN (SELECT MAX(a.attackDate) FROM RaynaudsAttackRecord a WHERE a.participantId = ar.participantId GROUP BY a.participantId) order by  ar.attackDate")
